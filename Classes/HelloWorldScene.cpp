@@ -154,7 +154,6 @@ bool HelloWorld::init() {
 	pLabelLeft->setAnchorPoint(ccp(0,1));
 	pLabelLeft->setPosition(ccp(3, pSpriteLeft->getPosition().y+pSpriteLeft->getContentSize().height));
 	pSpriteLeft->addChild(pLabelLeft, 1);
-	//CCLog("++++++++left x:%f, y:%f", pLabelLeft->getPosition().x, pLabelLeft->getPosition().y);
 
 	/*
 	 * 右侧区域
@@ -167,12 +166,9 @@ bool HelloWorld::init() {
 	//添加文字
 	CCLabelTTF* pLabelRight = CCLabelTTF::labelWithString(((CCString *) xmlParse->mDic->objectForKey("enemy"))->getCString(), "Arial", 14);
 	pLabelRight->setAnchorPoint(ccp(1,1));
-	//pLabelRight->setPosition(ccp(pSpriteRight->getPosition().x+pSpriteRight->getContentSize().width-3, pSpriteRight->getPosition().y+pSpriteRight->getContentSize().height));
 	//setPosition是相对于parent来说的
 	pLabelRight->setPosition(ccp(pSpriteRight->getContentSize().width-3, pSpriteRight->getContentSize().height));
-	//this->addChild(pLabelRight, 1);	//TODO 这种可以显示
 	pSpriteRight->addChild(pLabelRight, 1);
-	//CCLog("++++++++right x:%f, y:%f", pLabelRight->getPosition().x, pLabelRight->getPosition().y);
 
 	initPlayer();
 
