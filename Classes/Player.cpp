@@ -40,24 +40,26 @@ void Player::setPlayerType(PlayerType &playerType) {
 	this->playerType = playerType;
 }
 
-void Player::addPlane(Direction direction, CCPoint pos) {
+//TODO 是否可见、资源图片与主用户和从用户有关
+void Player::addPlane(Direction direction, CCPoint pos, std::string strSrc, bool isVisible) {
 	Plane *plane = new Plane(pos, direction);
 
 	CCSprite* pPlane;
 	switch(direction) {
 	case EAST:
-		pPlane = CCSprite::spriteWithFile("plane_east.png");
+		pPlane = CCSprite::spriteWithFile(strSrc.append("plane_east.png").c_str());
 		break;
 	case WEST:
-		pPlane = CCSprite::spriteWithFile("plane_west.png");
+		pPlane = CCSprite::spriteWithFile(strSrc.append("plane_west.png").c_str());
 		break;
 	case NORTH:
-		pPlane = CCSprite::spriteWithFile("plane_north.png");
+		pPlane = CCSprite::spriteWithFile(strSrc.append("plane_north.png").c_str());
 		break;
 	case SOUTH:
-		pPlane = CCSprite::spriteWithFile("plane_south.png");
+		pPlane = CCSprite::spriteWithFile(strSrc.append("plane_south.png").c_str());
 		break;
 	}
+	pPlane->setIsVisible(isVisible);
 	pPlane->setAnchorPoint(ccp(0,0));
 	pPlane->setPosition(ccp(boardPos.x + pos.x*lenPerTile, boardPos.y + pos.y*lenPerTile));
 	layer->addChild(pPlane, 2);
@@ -97,7 +99,7 @@ bool Player::isPlaneConflicts(Plane* p, Plane* ignorePlane) {
 	}
 	return false;
 }
-
+//TODO 写死的数字修改
 bool Player::isPlaneInBoard(CCPoint pos, Direction direct) {
 	if(direct == NORTH || direct == SOUTH) {
 		return pos.x>=0 && pos.x<=5 && pos.y>=0 && pos.y<=6;
@@ -152,7 +154,7 @@ Direction Player::getRotateDirection(Direction &direction) {
 	}
 }
 
-void Player::addRandomPlane() {
+void Player::addRandomPlane(std::string strSrc, bool isVisible) {
 	int i = 0;
 	bool isAdded = false;
 	while(i<10 && !isAdded) {
@@ -160,13 +162,13 @@ void Player::addRandomPlane() {
 		//CCLog("genRandomPlane x=%f,y=%f", plane->pos.x, plane->pos.y);
 		if(!isPlaneConflicts(plane)) {
 			//添加飞机
-			addPlane(plane->direction, plane->pos);
+			addPlane(plane->direction, plane->pos, strSrc, isVisible);
 			isAdded = true;
 		}
 		i++;
 	}
 	//遍历的方式来保证可以顺利添加
-	if(!isAdded) {
+	if(!isAdded) {	//TODO 写死的数字修改
 		Direction direction = getRandomDirection();
 		float posX=0.0f, posY=0.0f;
 		if(direction == NORTH || direction == SOUTH) {
@@ -203,12 +205,12 @@ Direction Player::getRandomDirection() {
 }
 
 void Player::deletePlane(Plane *plane) {
-	CCLog("*********plane pos x removeChild:%f", plane->pPlane->getPosition().x);
+	//CCLog("*********plane pos x removeChild:%f", plane->pPlane->getPosition().x);
 	plane->pPlane->retain();
 	layer->removeChild(plane->pPlane, true);
-	CCLog("*********plane pos x release:%f", plane->pPlane->getPosition().x);
+	//CCLog("*********plane pos x release:%f", plane->pPlane->getPosition().x);
 	plane->pPlane->release();
-	CCLog("*********plane pos x removeObject:%f", plane->pos.x);
+	//CCLog("*********plane pos x removeObject:%f", plane->pos.x);
 	planeList->removeObject(plane);
 }
 
@@ -230,6 +232,29 @@ CCPoint Player::convertPos(CCPoint &pos) {
 	int y = (pos.y - boardPos.y)/lenPerTile;
 	CCLog("convertPos x=%d,y=%d", x, y);
 	return ccp(x, y);
+}
+
+void Player::changePositon(CCPoint &boardPos, float lenPerTile) {
+	float scale = lenPerTile/this->lenPerTile;
+	//修改基本信息
+	this->boardPos = boardPos;
+	this->lenPerTile = lenPerTile;
+	//CCLog("boardPos.x:%f, y:%f, lenPerTile:%f", boardPos.x, boardPos.y, lenPerTile);
+
+	//缩放
+	for (int i = 0; i < planeList->count(); i++) {
+		Plane *plane = (Plane *) planeList->getObjectAtIndex(i);
+		CCLog("plane");
+		plane->changePosition(boardPos, lenPerTile, scale);
+	}
+}
+
+bool Player::isPlaneEnough() {
+	return (planeList->count() == 3);
+}
+
+bool Player::isHavePlane() {
+	return (planeList->count() > 0);
 }
 
 } /* namespace ecoolsoft */

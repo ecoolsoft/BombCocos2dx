@@ -9,6 +9,9 @@
 USING_NS_CC;
 using namespace ecoolsoft;
 
+/**
+ *TODO Activity idle timeout for HistoryRecord
+ */
 class HelloWorld : public cocos2d::CCLayer
 {
 public:
@@ -46,6 +49,10 @@ public:
 	void registerWithTouchDispatcher();
 
 private:
+	/**
+	 *改变玩家位置
+	 */
+	void changePlayerPosition(Player* main, Player* subordinate);
 	/**
 	 * 初始化用户
 	 */

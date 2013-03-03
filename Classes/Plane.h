@@ -26,7 +26,7 @@ enum Direction {
 class Plane : public CCObject{
 public:
 	Plane();
-	Plane(CCPoint pos, Direction direction);
+	Plane(CCPoint pos, Direction direction, bool isVisible=true);
 	virtual ~Plane();
 	bool contain(CCPoint &pos);
 	Tile* getTile(CCPoint &pos);
@@ -36,8 +36,10 @@ public:
 	CCPoint pos;
 	Direction direction;
 	CCSprite *pPlane;
+	void changePosition(CCPoint& boardPos, float lenPerTile, float scale=1);
 private:
 	CCMutableArray<Tile*> *tileList;
+	bool isVisible;
 	//Direction getRotateDirection(Direction direction);
 };
 

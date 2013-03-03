@@ -34,21 +34,17 @@ public:
 
 	void setPlayerType(PlayerType &playerType);
 	/**
-	 * 飞机列表
-	 */
-	CCMutableArray<Plane*> *planeList;
-	/**
 	 * 被攻击坐标
 	 */
 	CCMutableArray<Tile*> *attackedTileList;
 	/**
 	 * 添加飞机
 	 */
-	void addPlane(Direction direction, CCPoint pos);
+	void addPlane(Direction direction, CCPoint pos, std::string strSrc="main_", bool isVisible=true);
 	/**
 	 * 添加随机飞机
 	 */
-	void addRandomPlane();
+	void addRandomPlane(std::string strSrc="main_", bool isVisible=true);
 	/**
 	 * 绘图区域坐标
 	 */
@@ -66,14 +62,30 @@ public:
 	 */
 	Plane* getPlane(CCPoint &pos);
 	/**
-	 *
+	 * 旋转飞机
 	 */
 	bool rotate(Plane *plane);
 	/**
-	 *
+	 * 移动飞机
 	 */
 	bool move(Plane *plane, int x, int y);
+	/**
+	 * 改变位置
+	 */
+	void changePositon(CCPoint &boardPos, float lenPerTile);
+	/**
+	 * 是否飞机数已经够了
+	 */
+	bool isPlaneEnough();
+	/**
+	  * 是否有飞机
+	  */
+	bool isHavePlane();
 private:
+	/**
+	  * 飞机列表
+	  */
+	CCMutableArray<Plane*> *planeList;
 	/**
 	 * 玩家类型
 	 */

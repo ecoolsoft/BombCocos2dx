@@ -194,30 +194,48 @@ void HelloWorld::menuSettingCallback(CCObject* pSender) {
 
 void HelloWorld::menuAddCallback(CCObject* pSender) {
 	//添加飞机
-	if(playerMain->planeList->count() < 3) {
+	if(!playerMain->isPlaneEnough()) {
 		playerMain->addRandomPlane();
 		pDeleteItem->setIsEnabled(true);
 	}
 	//如果已经添加了三架飞机，按钮变灰
-	if(playerMain->planeList->count() == 3) {
+	if(playerMain->isPlaneEnough()) {
 		pAddItem->setIsEnabled(false);
 		pStartItem->setIsEnabled(true);
+	}
+
+	//敌人添加飞机，隐藏的
+	if(!playerSubordinate->isPlaneEnough()) {
+		playerSubordinate->addRandomPlane("sub_", false);
 	}
 }
 
 void HelloWorld::menuDeleteCallback(CCObject* pSender) {
-	if(playerMain->planeList->count()>0) {
+	if(playerMain->isHavePlane()) {
 		playerMain->deletePlane();
 		pAddItem->setIsEnabled(true);
 	}
-	if(playerMain->planeList->count() == 0) {
+	if(!playerMain->isHavePlane()) {
 		pDeleteItem->setIsEnabled(false);
 	}
 	pStartItem->setIsEnabled(false);
 }
 
-void HelloWorld::menuStartCallback(CCObject* pSender) {
+void HelloWorld::changePlayerPosition(Player* main, Player* subordinate) {
+	CCPoint posTemp = main->boardPos;
+	float lenTemp = main->lenPerTile;
 
+	//更改主用户坐标
+	main->changePositon(subordinate->boardPos, subordinate->lenPerTile);
+
+	//更改从用户坐标
+	//subordinate->changePositon(posTemp, lenTemp);
+}
+
+void HelloWorld::menuStartCallback(CCObject* pSender) {
+	//TODO 改变飞机的位置
+	changePlayerPosition(playerMain, playerSubordinate);
+	pDeleteItem->setIsEnabled(false);
 }
 
 void HelloWorld::menuSoundCallback(CCObject* pSender) {
@@ -251,7 +269,7 @@ void HelloWorld::ccTouchesBegan(CCSet* touches, CCEvent* event) {
 
 	//CCLog("++++++++begin befor  x:%f, y:%f", location.x, location.y);
 	startLocation = CCDirector::sharedDirector()->convertToGL(location);
-	CCLog("++++++++begin after  x:%f, y:%f", startLocation.x, startLocation.y);
+	//CCLog("++++++++begin after  x:%f, y:%f", startLocation.x, startLocation.y);
 }
 
 void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event) {
@@ -260,7 +278,7 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event) {
 
 	//CCLog("++++++++end befor  x:%f, y:%f", location.x, location.y);
 	location = CCDirector::sharedDirector()->convertToGL(location);
-	CCLog("++++++++end after  x:%f, y:%f", location.x, location.y);
+	//CCLog("++++++++end after  x:%f, y:%f", location.x, location.y);
 
 	if(startLocation.x > playerMain->boardPos.x
 			&& startLocation.x < playerMain->boardPos.x + 10*playerMain->lenPerTile
@@ -271,7 +289,7 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event) {
 			//&& location.y > playerMain->boardPos.y
 			//&& location.y < playerMain->boardPos.y + 10*playerMain->lenPerTile
 			) {
-		CCLog("in board");
+		//CCLog("in board");
 		Plane* plane = playerMain->getPlane(startLocation);
 		if(plane != NULL) {
 			CCLog("not null");

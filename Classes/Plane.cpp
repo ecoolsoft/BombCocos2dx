@@ -10,7 +10,7 @@
 namespace ecoolsoft {
 
 Plane::Plane() :
-		tileList(NULL), pPlane(NULL) {
+		tileList(NULL), pPlane(NULL), isVisible(true) {
 
 }
 
@@ -18,10 +18,11 @@ Plane::~Plane() {
 	// TODO Auto-generated destructor stub
 }
 
-Plane::Plane(CCPoint pos, Direction direction) :
+Plane::Plane(CCPoint pos, Direction direction, bool isVisible) :
 		pos(pos), direction(direction) {
 	tileList = new CCMutableArray<Tile*>();
 	addTiles(direction);
+	this->isVisible = isVisible;
 }
 
 void Plane::setPPlane(CCSprite *pPlane) {
@@ -111,7 +112,7 @@ bool Plane::conflict(Plane* plane) {
 		Tile *tile = (Tile *) tileList->getObjectAtIndex(i);
 		for(int j=0; j<plane->tileList->count(); j++) {
 			Tile *tileOfPlane = (Tile *) plane->tileList->getObjectAtIndex(j);
-			CCLog("in conflict pos.x=%f,pos.y=%f, tile->pos.x=%f, tile->pos.y=%f, plane->pos.x=%f, plane->pos.y=%f, tileOfPlane->pos.x=%f, tileOfPlane->pos.y=%f", this->pos.x, this->pos.y, tile->pos.x, tile->pos.y, plane->pos.x, plane->pos.y, tileOfPlane->pos.x, tileOfPlane->pos.y);
+			//CCLog("in conflict pos.x=%f,pos.y=%f, tile->pos.x=%f, tile->pos.y=%f, plane->pos.x=%f, plane->pos.y=%f, tileOfPlane->pos.x=%f, tileOfPlane->pos.y=%f", this->pos.x, this->pos.y, tile->pos.x, tile->pos.y, plane->pos.x, plane->pos.y, tileOfPlane->pos.x, tileOfPlane->pos.y);
 			if(this->pos.x + tile->pos.x == plane->pos.x + tileOfPlane->pos.x && this->pos.y + tile->pos.y == plane->pos.y + tileOfPlane->pos.y ) {
 				return true;
 			}
@@ -119,5 +120,12 @@ bool Plane::conflict(Plane* plane) {
 	}
 	return false;
 }
+
+void Plane::changePosition(CCPoint& boardPos, float lenPerTile, float scale) {
+	pPlane->setScale(scale);
+	//pPlane->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("cloud1.png"));//not work
+	pPlane->setPosition(ccp(boardPos.x + pos.x*lenPerTile, boardPos.y + pos.y*lenPerTile));
+}
+
 }
 /* namespace ecoolsoft */
