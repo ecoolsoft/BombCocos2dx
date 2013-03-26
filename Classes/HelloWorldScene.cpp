@@ -1,4 +1,5 @@
 #include "HelloWorldScene.h"
+//#include "PureMVC/PureMVC.hpp"
 
 //USING_NS_CC;
 //using namespace ecoolsoft;
@@ -176,8 +177,8 @@ bool HelloWorld::init() {
 }
 
 void HelloWorld::initPlayer() {
-	playerMain = new Player(MAIN, this, ccp(15,15+20), 22);//×ÖÄ¸Êý×Ö20*20
-	playerSubordinate = new Player(SUBORDINATE, this, ccp(277,67+16), 18);//×ÖÄ¸Êý×Ö16*16
+	playerMain = new Player(MAIN, this, ccp(15,15+20), 22);//×ÖÄ¸Êý×Ö20*20£¬±ß¿ò15
+	playerSubordinate = new Player(SUBORDINATE, this, ccp(277,67+16), 18);//×ÖÄ¸Êý×Ö16*16£¬±ß¿ò7
 }
 
 void HelloWorld::menuCloseCallback(CCObject* pSender) {
@@ -233,7 +234,6 @@ void HelloWorld::changePlayerPosition(Player* main, Player* subordinate) {
 }
 
 void HelloWorld::menuStartCallback(CCObject* pSender) {
-	//TODO ¸Ä±ä·É»úµÄÎ»ÖÃ
 	changePlayerPosition(playerMain, playerSubordinate);
 	pDeleteItem->setIsEnabled(false);
 }
