@@ -50,6 +50,26 @@ public:
 
 private:
 	/**
+	 * 初始化按钮
+	 */
+	void initBtn();
+
+	/**
+	 * 初始化背景
+	 */
+	void initBackground();
+
+	/**
+	 * 初始化左侧区域
+	 */
+	void initLeftArea();
+
+	/**
+	 * 初始化右侧区域
+	 */
+	void initRightArea();
+
+	/**
 	 *改变玩家位置
 	 */
 	void changePlayerPosition(Player* main, Player* subordinate);
