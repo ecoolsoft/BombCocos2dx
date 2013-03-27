@@ -29,6 +29,10 @@ void Plane::setPPlane(CCSprite *pPlane) {
 	this->pPlane = pPlane;
 }
 
+CCSprite* Plane::getPPlane() {
+	return pPlane;
+}
+
 bool Plane::contain(CCPoint &pos) {
 	for (int i = 0; i < tileList->count(); i++) {
 		Tile *tile = (Tile *) tileList->getObjectAtIndex(i);

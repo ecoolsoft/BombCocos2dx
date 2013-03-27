@@ -206,10 +206,10 @@ Direction Player::getRandomDirection() {
 
 void Player::deletePlane(Plane *plane) {
 	//CCLog("*********plane pos x removeChild:%f", plane->pPlane->getPosition().x);
-	plane->pPlane->retain();
-	layer->removeChild(plane->pPlane, true);
+	plane->getPPlane()->retain();
+	layer->removeChild(plane->getPPlane(), true);
 	//CCLog("*********plane pos x release:%f", plane->pPlane->getPosition().x);
-	plane->pPlane->release();
+	plane->getPPlane()->release();
 	//CCLog("*********plane pos x removeObject:%f", plane->pos.x);
 	planeList->removeObject(plane);
 }

@@ -33,13 +33,14 @@ public:
 	void addTiles(Direction &direct);
 	bool conflict(Plane* plane);
 	void setPPlane(CCSprite *pPlane);
+	CCSprite* getPPlane();
 	CCPoint pos;
 	Direction direction;
-	CCSprite *pPlane;
 	void changePosition(CCPoint& boardPos, float lenPerTile, float scale=1);
 private:
 	CCMutableArray<Tile*> *tileList;
 	bool isVisible;
+	CCSprite *pPlane;
 	//Direction getRotateDirection(Direction direction);
 };
 
