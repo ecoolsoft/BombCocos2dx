@@ -10,6 +10,17 @@ USING_NS_CC;
 using namespace ecoolsoft;
 
 /**
+ * 游戏状态
+ */
+enum State
+{
+	INIT = 0,
+	START,
+	PAUSE,
+	OVER
+};
+
+/**
  *TODO Activity idle timeout for HistoryRecord
  */
 class HelloWorld : public cocos2d::CCLayer
@@ -116,6 +127,10 @@ private:
 	 * 开始位置
 	 */
 	CCPoint startLocation;
+	/**
+	 * 状态
+	 */
+	State state;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

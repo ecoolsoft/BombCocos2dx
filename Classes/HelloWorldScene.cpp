@@ -6,7 +6,7 @@
 
 HelloWorld::HelloWorld() :
 	strLanguage(NULL), playerMain(NULL), playerSubordinate(NULL),
-			currentPlayer(NULL), xmlParse(NULL) {
+			currentPlayer(NULL), xmlParse(NULL), state(INIT) {
 }//, leftPos(NULL), rightPos(NULL), leftLenPerTile(0.0f), rightLenPerTile(0.0f)
 
 HelloWorld::~HelloWorld() {
@@ -271,6 +271,7 @@ void HelloWorld::changePlayerPosition(Player* main, Player* subordinate) {
 void HelloWorld::menuStartCallback(CCObject* pSender) {
 	changePlayerPosition(playerMain, playerSubordinate);
 	pDeleteItem->setIsEnabled(false);
+	state = START;
 }
 
 void HelloWorld::menuSoundCallback(CCObject* pSender) {
@@ -308,6 +309,11 @@ void HelloWorld::ccTouchesBegan(CCSet* touches, CCEvent* event) {
 }
 
 void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event) {
+	CCLog("state:" + state);
+	if(state != INIT) {
+		return;
+	}
+
 	CCTouch* touch = (CCTouch*) (touches->anyObject());
 	CCPoint location = touch->locationInView();
 
@@ -327,7 +333,7 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event) {
 		//CCLog("in board");
 		Plane* plane = playerMain->getPlane(startLocation);
 		if (plane != NULL) {
-			CCLog("not null");
+			//CCLog("not null");
 			//如果是旋转
 			if (startLocation.x - location.x > playerMain->lenPerTile
 					&& startLocation.y - location.y > playerMain->lenPerTile) {
