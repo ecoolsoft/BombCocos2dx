@@ -10,6 +10,7 @@
 
 #include "cocos2d.h"
 #include "Plane.h"
+#include "Constants.h"
 
 USING_NS_CC;
 

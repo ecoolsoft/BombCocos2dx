@@ -72,17 +72,17 @@ void HelloWorld::initRightArea() {
 	 */
 	CCSprite* pSpriteRight = CCSprite::spriteWithFile("right.png");
 	pSpriteRight->setAnchorPoint(ccp(0,0));
-	pSpriteRight->setPosition(ccp(270, 60));
+	pSpriteRight->setPosition(ccp(Constants::SPRITE_RIGHT_POSITION_X, Constants::SPRITE_RIGHT_POSITION_Y));
 	this->addChild(pSpriteRight, 1);
 
 	//添加文字
 	CCLabelTTF* pLabelRight = CCLabelTTF::labelWithString(
 			((CCString *) xmlParse->mDic->objectForKey("enemy"))->getCString(),
-			"Arial", 14);
+			"Arial", Constants::FONT_SIZE);
 	pLabelRight->setAnchorPoint(ccp(1,1));
 	//setPosition是相对于parent来说的
 	pLabelRight->setPosition(
-			ccp(pSpriteRight->getContentSize().width-3, pSpriteRight->getContentSize().height));
+			ccp(pSpriteRight->getContentSize().width-Constants::TEXT_MARGIN, pSpriteRight->getContentSize().height));
 	pSpriteRight->addChild(pLabelRight, 1);
 }
 
@@ -92,7 +92,7 @@ void HelloWorld::initLeftArea() {
 	 */
 	CCSprite* pSpriteLeft = CCSprite::spriteWithFile("left.png");
 	pSpriteLeft->setAnchorPoint(ccp(0,0));
-	pSpriteLeft->setPosition(ccp(0, 0));
+	pSpriteLeft->setPosition(ccp(Constants::SPRITE_LEFT_POSITION_X, Constants::SPRITE_LEFT_POSITION_Y));
 	this->addChild(pSpriteLeft, 1);
 
 	//添加文字
@@ -100,7 +100,7 @@ void HelloWorld::initLeftArea() {
 			* pLabelLeft =
 					CCLabelTTF::labelWithString(
 							((CCString *) xmlParse->mDic->objectForKey("allies"))->getCString(),
-							"Arial", 14);
+							"Arial", Constants::FONT_SIZE);
 	pLabelLeft->setAnchorPoint(ccp(0,1));
 	pLabelLeft->setPosition(
 			ccp(3, pSpriteLeft->getPosition().y+pSpriteLeft->getContentSize().height));
@@ -113,7 +113,7 @@ void HelloWorld::initBackground() {
 	 */
 	CCSprite* pSpriteBK = CCSprite::spriteWithFile("bk.png");
 	pSpriteBK->setAnchorPoint(ccp(0,0));
-	pSpriteBK->setPosition(ccp(0, 0));
+	pSpriteBK->setPosition(ccp(Constants::BK_POSITION_X, Constants::BK_POSITION_Y));
 	this->addChild(pSpriteBK, 0);
 
 	/*
@@ -212,8 +212,8 @@ void HelloWorld::initBtn() {
 }
 
 void HelloWorld::initPlayer() {
-	playerMain = new Player(MAIN, this, ccp(15,15+20), 22);//字母数字20*20，边框15
-	playerSubordinate = new Player(SUBORDINATE, this, ccp(277,67+16), 18);//字母数字16*16，边框7
+	playerMain = new Player(MAIN, this, ccp(Constants::MAIN_BOARD_POSITION_X,Constants::MAIN_BOARD_POSITION_Y), Constants::MAIN_TILE_LEN);//字母数字20*20，边框15
+	playerSubordinate = new Player(SUBORDINATE, this, ccp(Constants::SUB_BOARD_POSITION_X,Constants::SUB_BOARD_POSITION_Y), Constants::SUB_TILE_LEN);//字母数字16*16，边框7
 }
 
 void HelloWorld::menuCloseCallback(CCObject* pSender) {

@@ -41,8 +41,8 @@ void Player::setPlayerType(PlayerType &playerType) {
 }
 
 bool Player::containPoint(CCPoint* location) {
-	if(location != NULL && location->x > boardPos.x && location->x < boardPos.x + 10 * lenPerTile
-			&& location->y > boardPos.y && location->y	< boardPos.y + 10 * lenPerTile) {
+	if(location != NULL && location->x > boardPos.x && location->x < boardPos.x + Constants::ROW_COUNT * lenPerTile
+			&& location->y > boardPos.y && location->y	< boardPos.y + Constants::COLUMN_COUNT * lenPerTile) {
 		return true;
 	} else {
 		return false;
@@ -85,11 +85,11 @@ Plane * Player::genRandomPlane() {
 	// TODO Ð´ËÀµÄÊý×ÖÒÆ×ß
 	CCPoint pos;
 	if(direction == NORTH || direction == SOUTH) {
-		pos.x = arc4random() % 6;
-		pos.y = arc4random() % 7;
+		pos.x = arc4random() % (int)Constants::NORTH_SOURTH_LIMIT_POSITION_X;
+		pos.y = arc4random() % (int)Constants::NORTH_SOURTH_LIMIT_POSITION_Y;
 	} else {
-		pos.x = arc4random() % 7;
-		pos.y = arc4random() % 6;
+		pos.x = arc4random() % (int)Constants::WEST_EAST_LIMIT_POSITION_X;
+		pos.y = arc4random() % (int)Constants::WEST_EAST_LIMIT_POSITION_Y;
 	}
 	return new Plane(pos, direction);
 
