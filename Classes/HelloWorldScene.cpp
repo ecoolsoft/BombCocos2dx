@@ -229,21 +229,22 @@ void HelloWorld::menuSettingCallback(CCObject* pSender) {
 }
 
 void HelloWorld::menuAddCallback(CCObject* pSender) {
+	//pthread_mutex_lock(&add_mutex);
 	//添加飞机
 	if (!playerMain->isPlaneEnough()) {
 		playerMain->addRandomPlane();
 		pDeleteItem->setIsEnabled(true);
 	}
-	//如果已经添加了三架飞机，按钮变灰
-	if (playerMain->isPlaneEnough()) {
+	if (playerMain->isPlaneEnough()) {	//如果已经添加了三架飞机，按钮变灰
 		pAddItem->setIsEnabled(false);
 		pStartItem->setIsEnabled(true);
 	}
 
 	//敌人添加飞机，隐藏的
 	if (!playerSubordinate->isPlaneEnough()) {
-		playerSubordinate->addRandomPlane("sub_", false);
+		playerSubordinate->addRandomPlane("sub_", true);
 	}
+	//pthread_mutex_unlock(&add_mutex);
 }
 
 void HelloWorld::menuDeleteCallback(CCObject* pSender) {
@@ -256,16 +257,15 @@ void HelloWorld::menuDeleteCallback(CCObject* pSender) {
 	}
 	pStartItem->setIsEnabled(false);
 }
-
+//TODO 切换后大小不对
 void HelloWorld::changePlayerPosition(Player* main, Player* subordinate) {
 	CCPoint posTemp = main->boardPos;
 	float lenTemp = main->lenPerTile;
-
 	//更改主用户坐标
 	main->changePositon(subordinate->boardPos, subordinate->lenPerTile);
 
 	//更改从用户坐标
-	//subordinate->changePositon(posTemp, lenTemp);
+	subordinate->changePositon(posTemp, lenTemp);
 }
 
 void HelloWorld::menuStartCallback(CCObject* pSender) {
@@ -309,9 +309,10 @@ void HelloWorld::ccTouchesBegan(CCSet* touches, CCEvent* event) {
 }
 
 void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event) {
-	CCLog("state:" + state);
-	if(state != INIT) {
-		return;
+	if(state == INIT) {
+		CCLog("state:INIT");
+	} else if(state == START) {
+		CCLog("state:START");
 	}
 
 	CCTouch* touch = (CCTouch*) (touches->anyObject());
@@ -321,16 +322,17 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event) {
 	location = CCDirector::sharedDirector()->convertToGL(location);
 	//CCLog("++++++++end after  x:%f, y:%f", location.x, location.y);
 
-	if (startLocation.x > playerMain->boardPos.x && startLocation.x
-			< playerMain->boardPos.x + 10 * playerMain->lenPerTile
-			&& startLocation.y > playerMain->boardPos.y && startLocation.y
-			< playerMain->boardPos.y + 10 * playerMain->lenPerTile
+	if (playerMain->containPoint(&location) && state == INIT) {
+//	if (startLocation.x > playerMain->boardPos.x && startLocation.x
+//			< playerMain->boardPos.x + 10 * playerMain->lenPerTile
+//			&& startLocation.y > playerMain->boardPos.y && startLocation.y
+//			< playerMain->boardPos.y + 10 * playerMain->lenPerTile
 	//&& location.x > playerMain->boardPos.x
 	//&& location.x < playerMain->boardPos.x + 10*playerMain->lenPerTile
 	//&& location.y > playerMain->boardPos.y
 	//&& location.y < playerMain->boardPos.y + 10*playerMain->lenPerTile
-	) {
-		//CCLog("in board");
+//	) {
+		CCLog("in board");
 		Plane* plane = playerMain->getPlane(startLocation);
 		if (plane != NULL) {
 			//CCLog("not null");
@@ -359,5 +361,7 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event) {
 				playerMain->move(plane, 0, -1);
 			}
 		}
+	} else if(playerSubordinate->containPoint(&location) && state == START) {
+		CCLog("attack");
 	}
 }

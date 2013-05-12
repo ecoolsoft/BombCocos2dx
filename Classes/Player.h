@@ -81,6 +81,10 @@ public:
 	  * 是否有飞机
 	  */
 	bool isHavePlane();
+	/**
+	 * 是否包括该
+	 */
+	bool containPoint(CCPoint* location);
 private:
 	/**
 	  * 飞机列表

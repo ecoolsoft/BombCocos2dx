@@ -40,6 +40,15 @@ void Player::setPlayerType(PlayerType &playerType) {
 	this->playerType = playerType;
 }
 
+bool Player::containPoint(CCPoint* location) {
+	if(location != NULL && location->x > boardPos.x && location->x < boardPos.x + 10 * lenPerTile
+			&& location->y > boardPos.y && location->y	< boardPos.y + 10 * lenPerTile) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 //TODO 是否可见、资源图片与主用户和从用户有关
 void Player::addPlane(Direction direction, CCPoint pos, std::string strSrc, bool isVisible) {
 	Plane *plane = new Plane(pos, direction);
@@ -63,6 +72,7 @@ void Player::addPlane(Direction direction, CCPoint pos, std::string strSrc, bool
 	pPlane->setAnchorPoint(ccp(0,0));
 	pPlane->setPosition(ccp(boardPos.x + pos.x*lenPerTile, boardPos.y + pos.y*lenPerTile));
 	layer->addChild(pPlane, 2);
+	CCLog("add plane:%f,%f,%f,%f,%f", boardPos.x, boardPos.y, pos.x, pos.y, lenPerTile);
 	plane->setPPlane(pPlane);
 	planeList->addObject(plane);
 }
@@ -159,11 +169,11 @@ void Player::addRandomPlane(std::string strSrc, bool isVisible) {
 	bool isAdded = false;
 	while(i<10 && !isAdded) {
 		Plane* plane = genRandomPlane();
-		//CCLog("genRandomPlane x=%f,y=%f", plane->pos.x, plane->pos.y);
 		if(!isPlaneConflicts(plane)) {
 			//添加飞机
 			addPlane(plane->direction, plane->pos, strSrc, isVisible);
 			isAdded = true;
+			CCLog("addRandomPlane_isAdded x=%f,y=%f", plane->pos.x, plane->pos.y);
 		}
 		i++;
 	}
@@ -181,7 +191,8 @@ void Player::addRandomPlane(std::string strSrc, bool isVisible) {
 		for(int i=0; i<posX; i++) {
 			for(int j=0; j<posY; j++) {
 				if(!isPlaneConflicts(new Plane(ccp(i,j), direction))) {
-					addPlane(direction, ccp(i,j));
+					addPlane(direction, ccp(i,j), strSrc, isVisible);	//bugfix 在右侧添加了盟军飞机
+					CCLog("addRandomPlane_isAdded_false x=%f,y=%f", i, j);
 					return;
 				}
 			}

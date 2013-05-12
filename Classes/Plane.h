@@ -37,6 +37,7 @@ public:
 	CCPoint pos;
 	Direction direction;
 	void changePosition(CCPoint& boardPos, float lenPerTile, float scale=1);
+	bool containPoint(CCPoint * point);
 private:
 	CCMutableArray<Tile*> *tileList;
 	bool isVisible;

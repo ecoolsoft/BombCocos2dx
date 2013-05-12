@@ -129,6 +129,7 @@ void Plane::changePosition(CCPoint& boardPos, float lenPerTile, float scale) {
 	pPlane->setScale(scale);
 	//pPlane->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("cloud1.png"));//not work
 	pPlane->setPosition(ccp(boardPos.x + pos.x*lenPerTile, boardPos.y + pos.y*lenPerTile));
+	CCLog("change:%f,%f", pPlane->getContentSize().height, pPlane->getContentSize().width);
 }
 
 }

@@ -9,15 +9,18 @@
 USING_NS_CC;
 using namespace ecoolsoft;
 
+//static pthread_mutex_t add_mutex = PTHREAD_MUTEX_INITIALIZER;
+
 /**
  * сно╥в╢л╛
  */
 enum State
 {
 	INIT = 0,
-	START,
-	PAUSE,
-	OVER
+	READY = 1,
+	START = 2,
+	PAUSE = 3,
+	OVER = 4
 };
 
 /**

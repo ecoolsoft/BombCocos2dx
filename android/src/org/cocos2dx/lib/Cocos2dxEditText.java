@@ -35,7 +35,6 @@ public class Cocos2dxEditText extends EditText {
 
 	public Cocos2dxEditText(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Cocos2dxEditText(Context context, AttributeSet attrs) {
