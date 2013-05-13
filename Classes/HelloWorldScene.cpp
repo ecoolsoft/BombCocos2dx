@@ -145,7 +145,7 @@ void HelloWorld::initBtn() {
 			"CloseNormal.png", "CloseSelected.png", this,
 			menu_selector(HelloWorld::menuCloseCallback));
 	pCloseItem->setAnchorPoint(ccp(0,0));
-	pCloseItem->setPosition(ccp(screenSize.width - 35, screenSize.height - 35));
+	pCloseItem->setPosition(ccp(Constants::BTN_CLOSE_POSITION_X, Constants::BTN_CLOSE_POSITION_Y));
 
 	/**
 	 * 设置按钮
@@ -155,14 +155,14 @@ void HelloWorld::initBtn() {
 			menu_selector(HelloWorld::menuSettingCallback));
 	pSettingItem->setAnchorPoint(ccp(0,0));
 	pSettingItem->setPosition(
-			ccp(screenSize.width - 75, screenSize.height - 35));
+			ccp(Constants::BTN_SETTING_POSITION_X, Constants::BTN_SETTING_POSITION_Y));
 
 	pAddItem
 			= CCMenuItemImage::itemFromNormalImage("AddNormal.png",
 					"AddSelected.png", this,
 					menu_selector(HelloWorld::menuAddCallback));
 	pAddItem->setAnchorPoint(ccp(0,0));
-	pAddItem->setPosition(ccp(284, 32));
+	pAddItem->setPosition(ccp(Constants::BTN_ADD_POSITION_X, Constants::BTN_ADD_POSITION_Y));
 	// TODO 修改禁用的图片
 	CCSprite *pAddItemDisable = CCSprite::spriteWithFile("AddDisable.png");
 	pAddItem->setDisabledImage(pAddItemDisable);
@@ -175,7 +175,7 @@ void HelloWorld::initBtn() {
 			"DeleteSelected.png", this,
 			menu_selector(HelloWorld::menuDeleteCallback));
 	pDeleteItem->setAnchorPoint(ccp(0,0));
-	pDeleteItem->setPosition(ccp(322, 32));
+	pDeleteItem->setPosition(ccp(Constants::BTN_DELETE_POSITION_X, Constants::BTN_DELETE_POSITION_Y));
 	// TODO 修改禁用的图片
 	CCSprite *pDeleteItemDisable =
 			CCSprite::spriteWithFile("DeleteDisable.png");
@@ -189,7 +189,7 @@ void HelloWorld::initBtn() {
 			"StartSelected.png", this,
 			menu_selector(HelloWorld::menuStartCallback));
 	pStartItem->setAnchorPoint(ccp(0,0));
-	pStartItem->setPosition(ccp(435, 0));
+	pStartItem->setPosition(ccp(Constants::BTN_START_POSITION_X, Constants::BTN_START_POSITION_Y));
 	// TODO 修改禁用的图片
 	CCSprite *pStartItemDisable = CCSprite::spriteWithFile("StartDisable.png");
 	pStartItem->setDisabledImage(pStartItemDisable);
@@ -202,7 +202,7 @@ void HelloWorld::initBtn() {
 			"SoundNormal.png", "SoundSelected.png", this,
 			menu_selector(HelloWorld::menuSoundCallback));
 	pSoundItem->setAnchorPoint(ccp(0,0));
-	pSoundItem->setPosition(ccp(360, 32));
+	pSoundItem->setPosition(ccp(Constants::BTN_SOUND_POSITION_X, Constants::BTN_SOUND_POSITION_Y));
 
 	// create menu, it's an autorelease object
 	CCMenu* pMenu = CCMenu::menuWithItems(pSettingItem, pCloseItem, pAddItem,
