@@ -255,7 +255,6 @@ void Player::changePositon(CCPoint &boardPos, float lenPerTile) {
 	//Ëõ·Å
 	for (int i = 0; i < planeList->count(); i++) {
 		Plane *plane = (Plane *) planeList->getObjectAtIndex(i);
-		CCLog("plane");
 		plane->changePosition(boardPos, lenPerTile, scale);
 	}
 }

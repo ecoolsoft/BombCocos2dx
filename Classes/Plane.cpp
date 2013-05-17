@@ -126,10 +126,13 @@ bool Plane::conflict(Plane* plane) {
 }
 
 void Plane::changePosition(CCPoint& boardPos, float lenPerTile, float scale) {
-	pPlane->setScale(scale);
+	CCLog("before change:%f,%f", pPlane->getContentSizeInPixels().height, pPlane->getContentSizeInPixels().width);
+
+	//pPlane->setScale(scale);
 	//pPlane->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("cloud1.png"));//not work
 	pPlane->setPosition(ccp(boardPos.x + pos.x*lenPerTile, boardPos.y + pos.y*lenPerTile));
-	CCLog("change:%f,%f", pPlane->getContentSize().height, pPlane->getContentSize().width);
+	CCLog("change:%f,%f", pPlane->getContentSizeInPixels().height, pPlane->getContentSizeInPixels().width);
+	CCLog("plane change pos:%f, %f, %f,%f,%f", boardPos.x, pos.x, boardPos.y, pos.y, lenPerTile);
 }
 
 }

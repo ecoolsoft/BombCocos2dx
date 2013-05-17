@@ -37,11 +37,11 @@ public:
 	static const float BTN_SOUND_POSITION_X = 360;
 	static const float BTN_SOUND_POSITION_Y = 32;
 
-	static const float MAIN_BOARD_POSITION_X = 15;		//边框：15；字母高度：20；数字宽度：20
+	static const float MAIN_BOARD_POSITION_X = 15;		//左侧：270*280；边框：15；字母高度：20；数字宽度：20
 	static const float MAIN_BOARD_POSITION_Y = 35;
 	static const float MAIN_TILE_LEN = 22;				//每个格宽度
 
-	static const float SUB_BOARD_POSITION_X = 277;		//边框：7；字母高度：16；数字宽度：16
+	static const float SUB_BOARD_POSITION_X = 277;		//右侧：210*220；边框：7；字母高度：16；数字宽度：16
 	static const float SUB_BOARD_POSITION_Y = 83;
 	static const float SUB_TILE_LEN = 18;				//每个格宽度
 
@@ -55,7 +55,7 @@ public:
 	static const float NORTH_SOURTH_LIMIT_POSITION_Y = 7;
 	static const float WEST_EAST_LIMIT_POSITION_X = 7;
 	static const float WEST_EAST_LIMIT_POSITION_Y = 6;
-};
 
+};
 } /* namespace ecoolsoft */
 #endif /* CONSTANTS_H_ */
