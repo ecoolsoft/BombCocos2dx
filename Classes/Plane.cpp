@@ -126,13 +126,20 @@ bool Plane::conflict(Plane* plane) {
 }
 
 void Plane::changePosition(CCPoint& boardPos, float lenPerTile, float scale) {
-	CCLog("before change:%f,%f", pPlane->getContentSizeInPixels().height, pPlane->getContentSizeInPixels().width);
+	//CCLog("before change:%f,%f", pPlane->getContentSizeInPixels().height, pPlane->getContentSizeInPixels().width);
+	//CCLog("before change:%d,%f,%f", isMain, scale, pPlane->getScale());
+	//bug fix 解决放大缩小不正确 问题
+	if(pPlane->getScale() != 1.0) {
+		pPlane->setScale(1);
+	} else {
+		pPlane->setScale(scale);
+	}
 
-	//pPlane->setScale(scale);
 	//pPlane->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("cloud1.png"));//not work
 	pPlane->setPosition(ccp(boardPos.x + pos.x*lenPerTile, boardPos.y + pos.y*lenPerTile));
-	CCLog("change:%f,%f", pPlane->getContentSizeInPixels().height, pPlane->getContentSizeInPixels().width);
-	CCLog("plane change pos:%f, %f, %f,%f,%f", boardPos.x, pos.x, boardPos.y, pos.y, lenPerTile);
+	//CCLog("change:%f,%f", pPlane->getContentSizeInPixels().height, pPlane->getContentSizeInPixels().width);
+	//CCLog("plane change pos:%f, %f, %f,%f,%f", boardPos.x, pos.x, boardPos.y, pos.y, lenPerTile);
+	//CCLog("plane change:%f", pPlane->getScale());
 }
 
 }
