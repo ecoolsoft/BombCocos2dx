@@ -257,7 +257,7 @@ void HelloWorld::menuDeleteCallback(CCObject* pSender) {
 	}
 	pStartItem->setIsEnabled(false);
 }
-//TODO 切换后大小不对
+
 void HelloWorld::changePlayerPosition(Player* main, Player* subordinate) {
 	CCPoint posTemp = main->boardPos;
 	float lenTemp = main->lenPerTile;
@@ -340,6 +340,7 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event) {
 			if (startLocation.x - location.x > playerMain->lenPerTile
 					&& startLocation.y - location.y > playerMain->lenPerTile) {
 				CCLog("***********rotate");
+				//TODO 有些空间比较小的地方，旋转用户体验不好。向下或者向左移动后可以旋转。
 				playerMain->rotate(plane);
 			} else if (startLocation.x - location.x > playerMain->lenPerTile
 					&& fabs(startLocation.y - location.y)
